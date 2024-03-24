@@ -28,17 +28,14 @@ from matplotlib import pyplot as plt
 #       1000 iteracji. Oznacza to, że 500 obserwacji zostanie 1000 razy przekazanych do sieci, a po każdej iteracji algorytm
 #       dostosuje wagi.
 
-
 # Jako funkcja aktywacji używana jest funkcja sigmoidalna.
 # np.exp reprezentuje stałą matematyczną zwaną liczbą Eulera i równą w przybliżeniu 2.71828.
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-
 # Pochodna funkcji sigmoidalnej.
 def sigmoid_derivative(x):
     return sigmoid(x) * (1 - sigmoid(x))
-
 
 # Klasa zawierająca mechanizmy sztucznej sieci neuronowej.
 class NeuralNetwork:
@@ -68,31 +65,31 @@ class NeuralNetwork:
     # Propagacja wsteczna - obliczanie kosztu i aktualizowanie wag.
     def back_propagation(self):
         cost = self.expected_output - self.output
-        # print('RZECZYWISTA: ')
-        # print(self.expected_output)
-        # print('PROGNOZOWANA: ')
-        # print(self.output)
-        # print('KOSZT: ')
-        # print(cost)
-        # print('UKRYTA: ')
-        # print(self.hidden)
+        print('RZECZYWISTA: ')
+        print(self.expected_output)
+        print('PROGNOZOWANA: ')
+        print(self.output)
+        print('KOSZT: ')
+        print(cost)
+        print('UKRYTA: ')
+        print(self.hidden)
         weights_hidden_update = np.dot(self.hidden.T, (2 * cost * sigmoid_derivative(self.output)))
-        # print('AKTUALIZACJA WAG WARSTWY UKRYTEJ:')
-        # print(weights_hidden_update)
+        print('AKTUALIZACJA WAG WARSTWY UKRYTEJ:')
+        print(weights_hidden_update)
         weights_input_update = np.dot(self.input.T, (
                     np.dot(2 * cost * sigmoid_derivative(self.output), self.weights_hidden.T) * sigmoid_derivative(
                 self.hidden)))
-        # print('AKTUALIZACJA WAG WARSTWY WEJŚCIOWEJ:')
-        # print(weights_hidden_update)
+        print('AKTUALIZACJA WAG WARSTWY WEJŚCIOWEJ:')
+        print(weights_hidden_update)
 
         # Aktualizowanie wag na podstawie pochodnej (nachylenia) funkcji straty.
         self.weights_hidden += weights_hidden_update
-        # print('WAGI WARSTWY UKRYTEJ:')
-        # print(weights_hidden_update)
+        print('WAGI WARSTWY UKRYTEJ:')
+        print(weights_hidden_update)
 
         self.weights_input += weights_input_update
-        # print('WAGI WARSTWY WEJŚCIOWEJ:')
-        # print(weights_hidden_update)
+        print('WAGI WARSTWY WEJŚCIOWEJ:')
+        print(weights_hidden_update)
 
 
 def MSE(targets, predictions):
@@ -104,7 +101,7 @@ def classification_error(targets, predictions):
     return (targets != y_pred).mean()
 
 
-def run_neural_network(feature_data, label_data, feature_count, hidden_node_count, epochs):
+def run_neural_network(feature_data, label_data, hidden_node_count, epochs):
     mse = []
     classification_error_history = []
     weights1_history = []
@@ -135,8 +132,7 @@ def run_neural_network(feature_data, label_data, feature_count, hidden_node_coun
 
 
 if __name__ == '__main__':
-    # Liczba cech w zbiorze danych.
-    FEATURE_COUNT = 2
+
     # Liczba węzłów w warstwie ukrytej.
     HIDDEN_NODE_COUNT = 2
     # Liczba iteracji nauki sieci neuronowej.
@@ -159,10 +155,9 @@ if __name__ == '__main__':
     # Uruchamianie sieci neuronowej.
     loss_history, classification_error_history, weights1_history, weights2_history = run_neural_network(X,
                                                                                                         Y,
-                                                                                                        FEATURE_COUNT,
                                                                                                         HIDDEN_NODE_COUNT,
                                                                                                         EPOCHS)
-    #    print(loss_history)
+    print(loss_history)
     # Wykres historii błędu MSE
 
     plt.plot(loss_history)
