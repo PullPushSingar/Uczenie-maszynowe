@@ -65,31 +65,31 @@ class NeuralNetwork:
     # Propagacja wsteczna - obliczanie kosztu i aktualizowanie wag.
     def back_propagation(self):
         cost = self.expected_output - self.output
-        print('RZECZYWISTA: ')
-        print(self.expected_output)
-        print('PROGNOZOWANA: ')
-        print(self.output)
-        print('KOSZT: ')
-        print(cost)
-        print('UKRYTA: ')
-        print(self.hidden)
+        # print('RZECZYWISTA: ')
+        # print(self.expected_output)
+        # print('PROGNOZOWANA: ')
+        # print(self.output)
+        # print('KOSZT: ')
+        # print(cost)
+        # print('UKRYTA: ')
+        # print(self.hidden)
         weights_hidden_update = np.dot(self.hidden.T, (2 * cost * sigmoid_derivative(self.output)))
-        print('AKTUALIZACJA WAG WARSTWY UKRYTEJ:')
-        print(weights_hidden_update)
+        # print('AKTUALIZACJA WAG WARSTWY UKRYTEJ:')
+        # print(weights_hidden_update)
         weights_input_update = np.dot(self.input.T, (
                     np.dot(2 * cost * sigmoid_derivative(self.output), self.weights_hidden.T) * sigmoid_derivative(
                 self.hidden)))
-        print('AKTUALIZACJA WAG WARSTWY WEJŚCIOWEJ:')
-        print(weights_hidden_update)
+        # print('AKTUALIZACJA WAG WARSTWY WEJŚCIOWEJ:')
+        # print(weights_hidden_update)
 
         # Aktualizowanie wag na podstawie pochodnej (nachylenia) funkcji straty.
         self.weights_hidden += weights_hidden_update
-        print('WAGI WARSTWY UKRYTEJ:')
-        print(weights_hidden_update)
+        # print('WAGI WARSTWY UKRYTEJ:')
+        # print(weights_hidden_update)
 
         self.weights_input += weights_input_update
-        print('WAGI WARSTWY WEJŚCIOWEJ:')
-        print(weights_hidden_update)
+        # print('WAGI WARSTWY WEJŚCIOWEJ:')
+        # print(self.weights_input)
 
 
 def MSE(targets, predictions):
@@ -115,18 +115,21 @@ def run_neural_network(feature_data, label_data, hidden_node_count, epochs):
         mse.append(MSE(label_data, nn.output))
         nn.back_propagation()
         classification_error_history.append(classification_error(label_data, nn.output))
-        weights1_history.append(nn.weights_input)
-        weights2_history.append(nn.weights_hidden)
+        # print("dupa dupa")
+        # print(nn.weights_input)
+        weights1_history.append(nn.weights_input.copy())
+        weights2_history.append(nn.weights_hidden.copy())
+
+
 
     print('DANE WYJŚCIOWE: ')
     for r in nn.output:
         print(r)
 
-    print('WAGI WARSTWY WEJŚCIOWEJ: ')
-    print(nn.weights_input)
-    weights1_history.append(nn.weights_input)
-    print('WAGI WARSTWY UKRYTEJ: ')
-    print(nn.weights_hidden)
+    # print('WAGI WARSTWY WEJŚCIOWEJ: ')
+    # print(nn.weights_input)
+    # print('WAGI WARSTWY UKRYTEJ: ')
+    # print(nn.weights_hidden)
 
     return mse, classification_error_history, weights1_history, weights2_history
 
@@ -136,7 +139,7 @@ if __name__ == '__main__':
     # Liczba węzłów w warstwie ukrytej.
     HIDDEN_NODE_COUNT = 2
     # Liczba iteracji nauki sieci neuronowej.
-    EPOCHS = 100
+    EPOCHS = 200
 
     X = np.array([
         [0, 0],
@@ -157,7 +160,7 @@ if __name__ == '__main__':
                                                                                                         Y,
                                                                                                         HIDDEN_NODE_COUNT,
                                                                                                         EPOCHS)
-    print(loss_history)
+    # print(loss_history)
     # Wykres historii błędu MSE
 
     plt.plot(loss_history)
@@ -178,6 +181,8 @@ if __name__ == '__main__':
     plt.ylabel('błęd klasyfikacji')
     plt.savefig('Images\classification_error_history.png')
     plt.show()
+
+
 
 
     # Wykresy historii wag pierwszej warstwy
