@@ -139,7 +139,7 @@ if __name__ == '__main__':
     # Liczba węzłów w warstwie ukrytej.
     HIDDEN_NODE_COUNT = 2
     # Liczba iteracji nauki sieci neuronowej.
-    EPOCHS = 200
+    EPOCHS = 100
 
     X = np.array([
         [0, 0],
